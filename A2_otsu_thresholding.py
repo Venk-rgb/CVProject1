@@ -106,14 +106,19 @@ im_size = int(math.sqrt(len(img_data)))
 pdf = create_pdf(img_data, im_size)
 plot_pdf(pdf, im_size)
 
-threshold_img_manual = manual_threshold(img_data, 110)
-threshold_img_otsu, inter_class_variances = otsu_threshold(img_data, im_size)
+choice = int(input('Enter which thresholding you want to apply: (1 for manual, 2 for otsu)'))
 
-plot_image(threshold_img_otsu, im_size)
+if choice == 1:
+    threshold_img_manual = manual_threshold(img_data, 110)
+    plot_image(threshold_img_manual, im_size)
+elif choice == 2:
+    threshold_img_otsu, inter_class_variances = otsu_threshold(img_data, im_size)
 
-thresholds = list(range(im_size))
+    plot_image(threshold_img_otsu, im_size)
 
-otsu_threshold, image_result = cv2.threshold(np.array(img_data_for_otsu), 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-print("Otsu threshold value obtained by using CV = ", otsu_threshold)
+    thresholds = list(range(im_size))
 
-plot_inter_class_variance(thresholds, inter_class_variances)
+    otsu_threshold, image_result = cv2.threshold(np.array(img_data_for_otsu), 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    print("Otsu threshold value obtained by using CV = ", otsu_threshold)
+
+    plot_inter_class_variance(thresholds, inter_class_variances)
