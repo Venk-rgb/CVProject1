@@ -118,7 +118,13 @@ elif choice == 2:
 
     thresholds = list(range(im_size))
 
-    otsu_threshold, image_result = cv2.threshold(np.array(img_data_for_otsu), 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    otsu_threshold, image_result = cv2.threshold(np.array(img_data_for_otsu), 0, 255,
+                                                 cv2.THRESH_BINARY + cv2.THRESH_OTSU)
     print("Otsu threshold value obtained by using CV = ", otsu_threshold)
+
+    max_value = max(inter_class_variances)
+    for i in range(len(inter_class_variances)):
+        if inter_class_variances[i] == max_value:
+            print(i, inter_class_variances[i])
 
     plot_inter_class_variance(thresholds, inter_class_variances)
